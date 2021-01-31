@@ -11,9 +11,11 @@ until the paper is accepted,
 for hiding author info so as to satisfy the anonymity requirement.
 
 ## Install ParaX
-Download the MXNet-1.5.0 source code from "https://github.com/apache/incubator-mxnet/".
+git clone https://github.com/nicexlab/parax-source
 
-Patch the diff file in the root directory of MXNet-1.5.0.
+cd parax-source
+
+make -j
 
 ## Run ParaX
 export MXNET_ENGINE_TYPE=NaiveEngine; 
