@@ -1,8 +1,36 @@
-# Mxnet Training CNN with multiple virtual CPU synchronous SGD
-Devide the physical CPU to multiple virtual CPU, then doing a synchronous SGD. This method can speed up classification network training on Intel CPU. In addition, this method can also be applied to arm.
+# ParaX
 
-For example, if the CPU has 28 cores, we can divide it into 4 workers each with 7 cores and do a synchronos SGD. We use shared memory IPC instead of Parameter Server to achieve communication between workers, which is faster than PS on single node. We do experiments on INTEL XEON E5-2690 v4 CPU, which can gain an 1.5x speed up when training both Resnet and Mobilenet.
+## Overview
+This repository is for temporarily placing the ParaX project before publication. 
+ParaX is a variation of MXNet 
+that issues one instance processing a batch of samples for every core on a CPU, 
+so as to alleviate memory bandwidth contention in DNN model training and inference on many-core CPUs.
 
-To run this, you need to copy files above to overwrite the previous ones on MxNet. Total throughput is the sum of all workers' throughput. 
+Note: The key components of ParaX are temporarily not available 
+until the paper is accepted, 
+for hiding author info so as to satisfy the anonymity requirement.
 
-Read the bash 'run.sh' for more informations.
+## Install ParaX
+Download the MXNet-1.5.0 source code from "https://github.com/apache/incubator-mxnet/".
+
+Patch the diff file in the root directory of MXNet-1.5.0.
+
+## Run ParaX
+export MXNET_ENGINE_TYPE=NaiveEngine; 
+
+python $MXNET_ROOT/tools/launch.py -n $number_of_instances -p $core_per_instance --launcher=local $command
+
+$number_of_instances is the number of issued instances
+
+$core_per_instance is the number of cores occupied by each instance
+
+$command is the python program for DNN training or inference
+
+When $number_of_instances is equal to the number of cores and using $core_per_instance=1, ParaX adopts the instance-per-core paradigm
+
+## Example
+export MXNET_ENGINE_TYPE=NaiveEngine; 
+
+python $MXNET_ROOT /tools/launch.py -n 56 -p 1 --launcher=local python $MXNET_ROOT/example/image_classification/train_imagenet.py 
+
+This will train ImageNet with ParaX.
