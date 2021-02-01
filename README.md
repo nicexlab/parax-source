@@ -1,14 +1,11 @@
 # ParaX
 
 ## Overview
-This repository is for temporarily placing the ParaX project before publication. 
 ParaX is a variation of MXNet 
 that issues one instance processing a batch of samples for every core on a CPU, 
 so as to alleviate memory bandwidth contention in DNN model training and inference on many-core CPUs.
 
-Note: The key components of ParaX are temporarily not available 
-until the paper is accepted, 
-for hiding author info so as to satisfy the anonymity requirement.
+Note: ParaX has been published in VLDB'21. 
 
 ## Install ParaX
 git clone https://github.com/nicexlab/parax-source
